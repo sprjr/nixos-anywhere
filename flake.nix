@@ -1,7 +1,7 @@
 {
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   inputs.disko.url = "github:nix-community/disko";
-  inputs.disko.nixpkgs.follows = "nixpkgs";
+  inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nixos-facter-module.url = "github:numtide/nixos-facter-modules";
 
   outputs =
