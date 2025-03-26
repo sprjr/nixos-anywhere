@@ -7,7 +7,6 @@
     {
       nixpkgs,
       disko,
-      nixos-facter-modules,
       ...
     }:
     {
