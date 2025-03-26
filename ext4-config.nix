@@ -3,7 +3,7 @@
   disko.devices = {
     disk = {
       my-disk = {
-        device = "/dev/sda";
+        device = "/dev/sda"; # adjust target disk as needed
 	type = "disk";
 	content = {
 	  type = "gpt";
