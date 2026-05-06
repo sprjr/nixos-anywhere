@@ -1,5 +1,6 @@
 extra-files/
 *extra-files*
 *facter.json
+hosts/ws-test/facter.json
 *secrets*
 .env
