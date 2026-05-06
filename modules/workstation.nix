@@ -1,6 +1,6 @@
-{ pkgs, nixos-anywhere-workstation, ... }:
+{ pkgs, hostname, ... }:
 {
-  networking.hostName = nixos-anywhere-workstation;
+  networking.hostName = hostname;
 
   nix.settings = {
     experimental-features = [
