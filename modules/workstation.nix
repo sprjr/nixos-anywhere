@@ -1,6 +1,6 @@
 { pkgs, hostname, ... }:
 {
-  networking.hostName = hostname;
+  networking.hostName = "hostname";
 
   nix.settings = {
     experimental-features = [
