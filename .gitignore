@@ -1,5 +1,5 @@
 extra-files/
 *extra-files*
-*facter.json*
+hosts/*/*facter.json*
 *secrets*
 .env
