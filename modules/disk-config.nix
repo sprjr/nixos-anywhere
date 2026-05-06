@@ -29,14 +29,14 @@
           content = {
             type = "luks";
             name = "cryptroot";
-            extraOpenArgs = [
-              "--allow-discards"
-              "--perf-no_read_workqueue"
-              "--perf-no_write_workqueue"
-            ];
+            passwordFile = "/tmp/disko.key";
             settings = {
-              keyFile = "/tmp/disko.key";
-              crypttabExtraOpts = [ "tpm2-device=auto" ];
+              crypttabExtraOpts = [
+                "tpm2-device=auto"
+                "discard"
+                "no-read-workqueue"
+                "no-write-workqueue"
+              ];
             };
             content = {
               type = "filesystem";
