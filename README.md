@@ -73,6 +73,8 @@ shred -u /tmp/disko.key
 
 Enter the LUKS passphrase at first boot, then enroll TPM2:
 
+
+(note that omitting "12" from the `--tpm2-pcrs=0+2+7+12` flag removes the systemd-boot check. Depending on your security tolerance, this may be a bit nicer of an experience. Less secure, but up to user preference.)
 ```bash
 sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+2+7+12 /dev/nvme0n1p3
 sudo systemctl reboot
