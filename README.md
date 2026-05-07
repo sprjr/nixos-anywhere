@@ -118,8 +118,14 @@ Deploy the same way as above, substituting the new hostname and target IP.
 
 From source:
 
+To update base config:
 ```bash
 nixos-rebuild switch --flake .#ws-test --target-host root@<target-ip> --use-remote-sudo
+```
+
+To switch to new config entirely:
+```bash
+nixos-rebuild switch --flake .#<your-own-custom-config> --target-hots root@<target-ip> --use-remote-sudo
 ```
 
 ## Notes
