@@ -1,6 +1,6 @@
 { pkgs, hostname, ... }:
 {
-  networking.hostName = "hostname";
+  networking.hostName = hostname;
 
   nix.settings = {
     experimental-features = [
@@ -40,20 +40,20 @@
   };
 
   users.mutableUsers = false;
-  users.users.patrick = {
+  users.users.admin = {
     isNormalUser = true;
-    description = "Default user";
+    description = "Default admin user";
     extraGroups = [
       "wheel"
       "networkmanager"
     ];
-    hashedPasswordFile = "/var/lib/secrets/default-user.hash";
+    hashedPasswordFile = "/var/lib/secrets/admin.hash";
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYxyYpBB8K35/1+c22hBDV6mQFkqvxJeBC/SWs8Yyh+ patrick@macnnix"
+      "ssh-ed25519 AAAA...REPLACE_WITH_YOUR_KEY... user@host"
     ];
   };
   users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYxyYpBB8K35/1+c22hBDV6mQFkqvxJeBC/SWs8Yyh+ patrick@macnnix"
+    "ssh-ed25519 AAAA...REPLACE_WITH_YOUR_KEY... user@host"
   ];
 
   networking.networkmanager.enable = true;
