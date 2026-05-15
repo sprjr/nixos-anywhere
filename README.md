@@ -10,7 +10,7 @@ GPT
 └── p3: rest     LUKS2 → ext4   /    (TPM2 auto-unlock + passphrase fallback)
 ```
 
-Note: you can change the filesystem from ext4 to any desired (functional) filesystem by modifying the value in the ./modules/disk-config.nix file from ext4 to your desired option.
+Note: you can change the filesystem from ext4 to any desired (functional) filesystem by modifying the value in the ./modules/disk-config.nix file from ext4 to your desired option. Additional config might be necessary.
 
 ## Prerequisites
 
