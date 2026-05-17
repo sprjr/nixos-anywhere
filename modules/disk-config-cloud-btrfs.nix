@@ -1,0 +1,51 @@
+{ diskDevice, ... }:
+{
+  disko.devices.disk.main = {
+    device = diskDevice;
+    type = "disk";
+    content = {
+      type = "gpt";
+      partitions = {
+        ESP = {
+          size = "1G";
+          type = "EF00";
+          content = {
+            type = "filesystem";
+            format = "vfat";
+            mountpoint = "/boot";
+            mountOptions = [ "umask=0077" ];
+          };
+        };
+        root = {
+          size = "100%";
+          content = {
+            type = "btrfs";
+            extraArgs = [ "-L" "nixos" "-f" ];
+            subvolumes = {
+              "@root" = {
+                mountpoint = "/";
+                mountOptions = [ "compress=zstd:3" "noatime" "ssd" "discard=async" ];
+              };
+              "@home" = {
+                mountpoint = "/home";
+                mountOptions = [ "compress=zstd:3" "noatime" "ssd" "discard=async" ];
+              };
+              "@nix" = {
+                mountpoint = "/nix";
+                mountOptions = [ "compress=zstd:3" "noatime" "ssd" "discard=async" ];
+              };
+              "@log" = {
+                mountpoint = "/var/log";
+                mountOptions = [ "compress=zstd:3" "noatime" "ssd" "discard=async" ];
+              };
+              "@snapshots" = {
+                mountpoint = "/.snapshots";
+                mountOptions = [ "compress=zstd:3" "noatime" "ssd" "discard=async" ];
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+}
