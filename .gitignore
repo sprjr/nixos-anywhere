@@ -4,3 +4,4 @@ extra-files/
 hosts/ws-test/facter.json
 *secrets*
 .env
+internal-docs/
