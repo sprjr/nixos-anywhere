@@ -6,7 +6,7 @@ Deploys NixOS via disko and nixos-anywhere across six variants: three workstatio
 
 | Target | ext4 | btrfs | zfs |
 |--------|------|-------|-----|
-| **Workstation** (LUKS + TPM2 auto-unlock) | `ws-ext4` — **tested** ✓ | `ws-btrfs` — **untested** ⚠ | `ws-zfs` — **untested** ⚠ |
+| **Workstation** (LUKS + TPM2 auto-unlock) | `ws-ext4` — **tested** ✓ | `ws-btrfs` — **untested** ✓ | `ws-zfs` — **untested** ⚠ |
 | **Cloud** (unencrypted, provider at-rest) | `cloud-ext4` — **untested** ⚠ | `cloud-btrfs` — **untested** ⚠ | `cloud-zfs` — **untested** ⚠ |
 
 Pick a variant by passing its name to `--flake .#<variant>` during deploy. Only ext4-workstation has been validated end-to-end. The others compile and follow upstream patterns but the install + first-boot path has not been verified — report results if you exercise them.
@@ -64,7 +64,8 @@ git add -A && git commit -m "initial flake"
 
 **Status: tested.**
 
-(Wired ethernet recommended, but I tested it successfully without.)
+Wired ethernet recommended, but I tested it successfully without.
+If you don't use a USB installer, you should use ethernet, or configure your system appropriately. When I don't use an installer it loses network when it reboots through the process and it fails.
 
 ```bash
 sudo systemctl start sshd
@@ -87,7 +88,7 @@ The target needs SSH access with root or passwordless sudo. Whatever Linux the p
 
 ### Workstation variants
 
-**Status: ext4 tested. btrfs and zfs untested.**
+**Status: ext4 and btrfs tested. zfs untested.**
 
 ```bash
 systemd-ask-password "LUKS passphrase: " | tr -d '\n' > /tmp/disko.key
@@ -112,7 +113,7 @@ Replace `ws-ext4` with `ws-btrfs` or `ws-zfs` for the other variants. `hosts/<va
 
 ### Cloud variants
 
-**Status: not yet tested.**
+**Status: all fs-types not yet tested.**
 
 ```bash
 nix run github:nix-community/nixos-anywhere -- \
