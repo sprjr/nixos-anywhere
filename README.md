@@ -17,9 +17,9 @@ Pick a variant by passing its name to `--flake .#<variant>` during deploy. Only 
 ```
 GPT
 ├── p1: 2 GiB    FAT32   /boot       (EFI)
-├── p2: 16 GiB   swap    randomEncryption
-└── p3: rest     LUKS2 → <ext4 | btrfs subvolumes | zfs datasets>   /
+└── p2: rest     LUKS2 → <ext4 | btrfs subvolumes | zfs datasets>   /
                  TPM2 auto-unlock + passphrase fallback
+                 (swap via zram, no disk swap partition)
 ```
 
 **Cloud** (all filesystems):
@@ -250,9 +250,9 @@ services.displayManager.gdm.enable = true;
 
 For a headless workstation, drop the entire `services.xserver`/`services.desktopManager`/`services.displayManager` block.
 
-### Hibernation
+### Hibernation and disk swap
 
-`randomEncryption = true` on swap blocks hibernation. For hibernation support, move swap inside the LUKS container (LVM-on-LUKS layout).
+Workstation variants use zram swap (RAM-backed, no disk partition). zram does not support hibernation. For hibernation support, add a swap partition or swapfile inside the LUKS container (LVM-on-LUKS or btrfs swapfile on the encrypted root) and disable zram.
 
 ## Notes
 
@@ -262,5 +262,7 @@ For a headless workstation, drop the entire `services.xserver`/`services.desktop
 - ZFS variants pin `boot.kernelPackages` to `latestCompatibleLinuxPackages` because OpenZFS lags mainline by weeks.
 - btrfs and zfs variants include monthly auto-scrub services.
 - For secrets management beyond `--extra-files`, see [sops-nix](https://github.com/Mic92/sops-nix) or [agenix](https://github.com/ryantm/agenix).
+- `randomEncryption = true` swap interacts badly with systemd-stage1 initrd (`boot.initrd.systemd.enable = true`); boot waits 90 s on `dev-mapper-...device`. Workstation variants now use `zramSwap` instead of a disk swap partition. If you need disk-backed swap for hibernation, place it inside the LUKS container (LVM-on-LUKS or btrfs swapfile) rather than as a separate randomEncryption partition.
+- The `tpm2-luks-enroll` service depends on `extra-files/var/lib/secrets/luks.key` being present at install time. If the deploy skips the `cp /tmp/disko.key extra-files/var/lib/secrets/luks.key` step, the service fails with an explicit error visible in `journalctl -u tpm2-luks-enroll`. Either fix the deploy or enroll TPM2 manually per the first-boot section.
 
 Open an issue if something is broken.
