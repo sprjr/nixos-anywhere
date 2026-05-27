@@ -98,6 +98,7 @@ chmod 600 /tmp/disko.key
 cp /tmp/disko.key extra-files/var/lib/secrets/luks.key
 chmod 600 extra-files/var/lib/secrets/luks.key
 
+The following command will build your target system locally (replace values as needed), then deploy it. The time it takes to complete will depend on your system and network. My tests have usually taken around 20-30 minutes on a Ryzen 5 5600 CPU and ~80mbps network connection:
 nix run github:nix-community/nixos-anywhere -- \
   --flake .#ws-ext4 \
   --target-host nixos@<target-ip> \
